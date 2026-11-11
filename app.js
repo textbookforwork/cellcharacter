@@ -55,6 +55,50 @@
   }
 
   /* ---------- 分頁一：五個角色（首頁） ---------- */
+  let selectedMoment = 0;
+  function momentCards(index) {
+    return ROLES.map((r) => {
+      const moment = r.platform[index];
+      const quiet = !moment.say.length;
+      const eye = index === 1 || index === 3 ? 'smile' : r.eye;
+      return `<article class="moment-role" style="--moment-tint:${S.BODIES[r.shape].tint}" aria-labelledby="moment-name-${r.id}">
+        <div class="moment-figure">${S.svg(r.shape, { eye, gaze: r.gaze })}</div>
+        <h3 id="moment-name-${r.id}">${esc(r.name)}</h3>
+        <div class="moment-bubble${quiet ? ' is-quiet' : ''}">${quiet ? '<span>（不說話）</span>' : esc(moment.say.join(' '))}</div>
+      </article>`;
+    }).join('');
+  }
+  function momentCompare() {
+    return `<section class="moments wrap" id="moments" aria-labelledby="moments-h">
+      <h2 id="moments-h">同一個時刻，五種反應</h2>
+      <div class="moments-layout">
+        <div class="moment-tabs" role="tablist" aria-label="選擇課堂情境" aria-orientation="vertical">${ROLES[0].platform.map((p, i) => `<button type="button" role="tab" id="moment-tab-${i}" aria-controls="moment-panel" aria-selected="${i === selectedMoment}" tabindex="${i === selectedMoment ? 0 : -1}" data-moment="${i}"><span class="moment-number" aria-hidden="true">0${i + 1}</span><span>${esc(p.when)}</span></button>`).join('')}</div>
+        <div class="moment-scroll" id="moment-panel" role="tabpanel" aria-labelledby="moment-tab-${selectedMoment}" tabindex="0">
+          <div class="moment-lineup" aria-live="polite" aria-atomic="true">${momentCards(selectedMoment)}</div>
+        </div>
+      </div>
+    </section>`;
+  }
+  function compareTable() {
+    const C = D.compare;
+    const head = ROLES.map((r) => `<th scope="col" style="background:${S.BODIES[r.shape].tint}"><a href="#/role/${r.id}"><span class="cmp-name">${r.name}</span><span class="cmp-en">${r.en}</span></a></th>`).join('');
+    const body = C.rows.map((row) => `<tr>
+      <th scope="row">${row.name}</th>
+      ${row.cells.map((c, i) => `<td>${row.dots ? dots(row.dots[i]) : ''}<span>${c}</span></td>`).join('')}
+    </tr>`).join('');
+    return `<section class="cmp wrap" id="compare" aria-labelledby="cmp-h">
+      <div class="cmp-head">
+        <h2 id="cmp-h">五顆放在一起看</h2>
+        <p>${C.lead}</p>
+      </div>
+      <div class="cmp-scroll" tabindex="0">
+        <table class="cmp-table">
+          <thead><tr><th scope="col"><span class="sr-only">比較項目</span></th>${head}</tr></thead>
+          <tbody>${body}</tbody>
+        </table>
+      </div>
+    </section>`;
+  }
   function rolesPage() {
     return `${nav('roles')}
     <header class="ohero" id="top">
@@ -65,7 +109,8 @@
     </header>
     <section class="menu wrap" id="roles" aria-labelledby="roles-h">
       <h2 id="roles-h" class="sr-only">角色清單</h2>
-      <ul class="menu-list">
+      <div class="role-menu-scroll" tabindex="0" role="region" aria-label="五個角色入口">
+      <ul class="menu-list role-menu-list">
         ${ROLES.map((r) => `<li>
           <a class="menu-item" href="#/role/${r.id}" style="background:${S.BODIES[r.shape].tint}">
             <div>
@@ -75,10 +120,39 @@
           </a>
         </li>`).join('')}
       </ul>
+      </div>
     </section>
+    ${compareTable()}
+    ${momentCompare()}
     ${footer()}`;
   }
-  function bindRoles() {}
+  function bindRoles() {
+    const buttons = Array.from(document.querySelectorAll('[data-moment]'));
+    const panel = document.getElementById('moment-panel');
+    const choose = (index) => {
+      selectedMoment = index;
+      buttons.forEach((button, i) => {
+        button.setAttribute('aria-selected', String(i === index));
+        button.tabIndex = i === index ? 0 : -1;
+      });
+      panel.setAttribute('aria-labelledby', buttons[index].id);
+      panel.querySelector('.moment-lineup').innerHTML = momentCards(index);
+    };
+    buttons.forEach((button, index) => {
+      button.addEventListener('click', () => choose(index));
+      button.addEventListener('keydown', (event) => {
+        let next;
+        if (event.key === 'ArrowDown') next = (index + 1) % buttons.length;
+        else if (event.key === 'ArrowUp') next = (index + buttons.length - 1) % buttons.length;
+        else if (event.key === 'Home') next = 0;
+        else if (event.key === 'End') next = buttons.length - 1;
+        else return;
+        event.preventDefault();
+        choose(next);
+        buttons[next].focus();
+      });
+    });
+  }
 
   /* ---------- 分頁二：四種功能 ---------- */
   function modesPage() {
@@ -155,6 +229,12 @@
   }
 
   /* ---------- 分頁四：共用規則 ---------- */
+  function ruleAnswer(q) {
+    const refs = q.refs && q.refs.length
+      ? `<div class="rule-sources"><h4>研究與理論來源</h4><ul class="refs">${q.refs.map((f) => `<li><p class="ref-who">${f.who}</p><p class="ref-theory">${f.theory}</p><p class="ref-what">${f.what}</p></li>`).join('')}</ul></div>`
+      : '';
+    return `<h3>${q.q}</h3>${q.a.map((a) => `<p>${a}</p>`).join('')}${refs}`;
+  }
   function rulesPage() {
     return `${nav('rules')}
     <header class="ohero" id="top">
@@ -168,7 +248,7 @@
       <h2 id="rules-h" class="sr-only">規則問答</h2>
       <div class="faq-grid">
         <div class="qlist" role="tablist" aria-label="共用規則">${D.rules.map((q, i) => `<button role="tab" data-reveal aria-selected="${i === 0}" data-i="${i}"${i === 0 ? ' class="is-on"' : ''}><span>${q.tab}</span><span>${q.q}</span></button>`).join('')}</div>
-        <div class="answer" id="answer" data-reveal><div class="answer-in"><h3>${D.rules[0].q}</h3>${D.rules[0].a.map((a) => `<p>${a}</p>`).join('')}</div></div>
+        <div class="answer" id="answer" data-reveal><div class="answer-in">${ruleAnswer(D.rules[0])}</div></div>
       </div>
     </section>
     <section class="principles" id="principles" aria-labelledby="pr-h">
@@ -186,7 +266,7 @@
       const q = D.rules[Number(b.dataset.i)];
       const box = document.querySelector('#answer .answer-in');
       box.classList.add('hidden');
-      later(() => { box.innerHTML = `<h3>${q.q}</h3>${q.a.map((a) => `<p>${a}</p>`).join('')}`; box.classList.remove('hidden'); }, 200);
+      later(() => { box.innerHTML = ruleAnswer(q); box.classList.remove('hidden'); }, 200);
     }));
   }
 
@@ -201,60 +281,85 @@
     return `<span class="dots" aria-hidden="true">${s}</span>`;
   }
 
-  function detail(r) {
+  const folderSelections = new Map();
+  const FOLDER_TABS = [
+    { id: 'profile', label: '角色設定' },
+    { id: 'reference', label: '文獻來源' },
+    { id: 'dialogue', label: '情境台詞' },
+    { id: 'boundaries', label: '設計界線' }
+  ];
+  function detail(r, openTalk) {
     const b = S.BODIES[r.shape];
     const group = r.kind === 'role' ? ROLES : MODES;
     const idx = group.indexOf(r);
     const prev = group[(idx + group.length - 1) % group.length];
     const next = group[(idx + 1) % group.length];
+    const activeFolder = openTalk ? 'dialogue' : (folderSelections.get(r.id) || 'profile');
     return `${nav(r.kind === 'role' ? 'roles' : 'modes')}
-    <header class="dhero" id="top" style="background:${b.tint}">
-      <div class="dhero-text" data-reveal>
+    <header class="dhero dossier-hero" id="top">
+      <div class="dossier-avatar">${S.svg(r.shape, { eye: r.eye, gaze: r.gaze })}</div>
+      <div class="dhero-text">
         <p class="dhero-kicker">${r.kind === 'role' ? '核心角色' : '延伸功能'}<span>${r.en}</span></p>
-        <h1 class="dhero-h" data-reveal>${r.name}</h1>
-        <p class="dhero-tag" data-reveal>${r.tagline}</p>
-        ${r.intro.map((x) => `<p class="dhero-p" data-reveal>${x}</p>`).join('')}
-        <a class="btn" href="#talk">聽它說話</a>
+        <h1 class="dhero-h">${r.name}</h1>
+        <p class="dhero-tag">${r.tagline}</p>
       </div>
     </header>
 
-    <section class="dsec wrap" aria-labelledby="h-pos">
+    <section class="role-folder wrap" style="--folder-tint:${b.tint};--folder-color:${b.fill}" aria-label="${r.name}的設定資料夾">
+      <div class="folder-tabs" role="tablist" aria-label="設定資料分類">${FOLDER_TABS.map((tab) => `<button type="button" role="tab" id="folder-tab-${tab.id}" data-folder-tab="${tab.id}" aria-controls="folder-panel-${tab.id}" aria-selected="${tab.id === activeFolder}" tabindex="${tab.id === activeFolder ? 0 : -1}">${tab.id === 'profile' && r.kind === 'mode' ? '功能設定' : tab.label}</button>`).join('')}</div>
+      <div class="folder-sheets">
+      <div class="folder-panel" id="folder-panel-profile" role="tabpanel" aria-labelledby="folder-tab-profile" tabindex="0"${activeFolder !== 'profile' ? ' hidden' : ''}>
+    <section class="dsec" aria-labelledby="h-pos">
       <div class="dsec-grid">
         <div><h2 id="h-pos">${r.kind === 'role' ? '角色定位' : '功能定位'}</h2>${r.positionNote ? `<p class="dsec-note">${r.positionNote}</p>` : ''}</div>
+        <div class="folder-profile">
+        ${r.intro.map((x) => `<p>${x}</p>`).join('')}
         ${dl(r.position)}
+        </div>
       </div>
     </section>
 
-    <section class="dsec wrap" aria-labelledby="h-ref">
-      <div class="dsec-grid">
-        <div><h2 id="h-ref">文獻來源</h2></div>
-        <ul class="refs">${(window.REFS[r.id] || []).map((f) => `<li data-reveal${f.risk ? ' class="risk"' : ''}><p class="ref-who">${f.who}${f.risk ? '<span>負面效果的依據</span>' : ''}</p><p class="ref-theory">${f.theory}</p><p class="ref-what">${f.what}</p></li>`).join('')}</ul>
-      </div>
-    </section>
-
-    <section class="dsec wrap" aria-labelledby="h-knob">
+    <section class="dsec" aria-labelledby="h-knob">
       <div class="dsec-grid">
         <div><h2 id="h-knob">個性特徵</h2>${r.character ? `<p class="dsec-note">${r.character}</p>` : ''}</div>
         <ul class="knobs">${r.knobs.map(([n, v, k]) => `<li data-reveal><span class="knob-n">${n}</span>${dots(k)}<span class="knob-v">${v}</span></li>`).join('')}</ul>
       </div>
     </section>
 
-    <section class="dsec wrap vis" aria-labelledby="h-vis" style="--tint:${b.tint}">
-      <div class="dsec-grid">
-        <div><h2 id="h-vis">視覺表現</h2><p class="dsec-note">必備狀態：${r.states.join('、')}</p></div>
-        ${dl(r.visual)}
-      </div>
-    </section>
-
-    ${r.behaviour.length ? `<section class="dsec wrap" aria-labelledby="h-beh">
+    ${r.behaviour.length ? `<section class="dsec" aria-labelledby="h-beh">
       <div class="dsec-grid">
         <div><h2 id="h-beh">互動方式</h2></div>
         <ul class="plain">${r.behaviour.map((x) => `<li data-reveal>${x}</li>`).join('')}</ul>
       </div>
     </section>` : ''}
+      </div>
+
+      <div class="folder-panel" id="folder-panel-reference" role="tabpanel" aria-labelledby="folder-tab-reference" tabindex="0"${activeFolder !== 'reference' ? ' hidden' : ''}>
+    <section class="dsec" aria-labelledby="h-ref">
+      <div class="dsec-grid">
+        <div><h2 id="h-ref">文獻來源</h2></div>
+        <ul class="refs">${(window.REFS[r.id] || []).map((f) => `<li data-reveal${f.risk ? ' class="risk"' : ''}><p class="ref-who">${f.who}${f.risk ? '<span>負面效果的依據</span>' : ''}</p><p class="ref-theory">${f.theory}</p><p class="ref-what">${f.what}</p></li>`).join('')}</ul>
+      </div>
+    </section>
+      </div>
+
+      <div class="folder-panel" id="folder-panel-dialogue" role="tabpanel" aria-labelledby="folder-tab-dialogue" tabindex="0"${activeFolder !== 'dialogue' ? ' hidden' : ''}>
+    ${r.platform && r.platform.length ? `<section class="dsec plat" aria-labelledby="h-plat">
+      <div class="dsec-grid">
+        <div><h2 id="h-plat">平台上的五個時刻</h2><p class="dsec-note">同樣的課堂事件，${r.name}怎麼回應、什麼時候開口？以下台詞搭配各項動作與觸發條件；沒有台詞的時刻，以表情或動作回應。</p></div>
+        <ol class="plat-list">${r.platform.map((p) => `<li data-reveal>
+          <p class="plat-when">${p.when}</p>
+          <div class="plat-body">
+            <p class="plat-does">${r.name}會：${p.does}</p>
+            ${p.say.map((s) => `<div class="bubble">${s}</div>`).join('')}
+            <p class="plat-wrong"><span>最容易踩的錯</span>${p.wrong}</p>
+          </div>
+        </li>`).join('')}</ol>
+      </div>
+    </section>` : ''}
 
     <section class="talk" id="talk" aria-labelledby="h-talk" style="--tint:${b.tint}">
-      <div class="wrap talk-grid">
+      <div class="talk-grid">
         <div class="talk-side">
           <h2 id="h-talk">情境與台詞</h2>
           <div class="scenes" role="tablist" aria-label="情境">${r.scenes.map((sc, i) => `<button role="tab" aria-selected="${i === 0}" data-i="${i}"${i === 0 ? ' class="is-on"' : ''}>${sc.when}</button>`).join('')}</div>
@@ -262,14 +367,21 @@
         <div class="chat" id="chat" aria-live="polite"></div>
       </div>
     </section>
+      </div>
 
-    <section class="dsec wrap exit" aria-labelledby="h-exit">
+      <div class="folder-panel" id="folder-panel-boundaries" role="tabpanel" aria-labelledby="folder-tab-boundaries" tabindex="0"${activeFolder !== 'boundaries' ? ' hidden' : ''}>
+    <section class="dsec exit" aria-labelledby="h-exit">
       <div class="dsec-grid">
         <div><h2 id="h-exit">設計界線</h2></div>
         <div>
           <ul class="plain">${r.care.map((x) => `<li data-reveal>${x}</li>`).join('')}</ul>
           ${dl(r.exit)}
         </div>
+      </div>
+    </section>
+
+      </div>
+      <div class="folder-page-mark"><span>${r.name}的設定資料夾</span><span id="folder-page-number" aria-live="polite">0${FOLDER_TABS.findIndex((tab) => tab.id === activeFolder) + 1} / 04</span></div>
       </div>
     </section>
 
@@ -299,13 +411,39 @@
   }
 
   function bindDetail(r, talk) {
+    let selectedScene = 0;
+    const folderTabs = Array.from(document.querySelectorAll('[data-folder-tab]'));
+    const chooseFolder = (id) => {
+      clearTimers();
+      folderSelections.set(r.id, id);
+      folderTabs.forEach((button) => {
+        const selected = button.dataset.folderTab === id;
+        button.setAttribute('aria-selected', String(selected));
+        button.tabIndex = selected ? 0 : -1;
+        document.getElementById(button.getAttribute('aria-controls')).hidden = !selected;
+      });
+      document.getElementById('folder-page-number').textContent = `0${FOLDER_TABS.findIndex((tab) => tab.id === id) + 1} / 04`;
+      if (id === 'dialogue') playScene(r, selectedScene, true);
+    };
+    folderTabs.forEach((button, index) => {
+      button.addEventListener('click', () => chooseFolder(button.dataset.folderTab));
+      button.addEventListener('keydown', (event) => {
+        const next = event.key === 'ArrowRight' ? (index + 1) % folderTabs.length
+          : event.key === 'ArrowLeft' ? (index + folderTabs.length - 1) % folderTabs.length
+          : event.key === 'Home' ? 0 : event.key === 'End' ? folderTabs.length - 1 : null;
+        if (next === null) return;
+        event.preventDefault();
+        chooseFolder(folderTabs[next].dataset.folderTab);
+        folderTabs[next].focus();
+      });
+    });
     const btns = document.querySelectorAll('.scenes [role=tab]');
     btns.forEach((b) => b.addEventListener('click', () => {
       btns.forEach((x) => { x.classList.toggle('is-on', x === b); x.setAttribute('aria-selected', x === b); });
-      playScene(r, Number(b.dataset.i));
+      selectedScene = Number(b.dataset.i);
+      playScene(r, selectedScene);
     }));
-    playScene(r, 0, true);
-    if (talk) later(() => document.getElementById('talk').scrollIntoView(), 50);
+    chooseFolder(talk ? 'dialogue' : (folderSelections.get(r.id) || 'profile'));
   }
 
   function reveals() { document.querySelectorAll('[data-reveal]').forEach((el) => el.classList.add('is-in')); }
@@ -330,7 +468,7 @@
     const m = h.match(/^#\/role\/([a-z-]+)(\/talk)?/);
     if (m) {
       const r = D.roles.find((q) => q.id === m[1]);
-      if (r) { show('role:' + r.id, r.name + ' · 陪伴者角色設定', detail(r), () => bindDetail(r, !!m[2])); return; }
+      if (r) { show('role:' + r.id, r.name + ' · 陪伴者角色設定', detail(r, !!m[2]), () => bindDetail(r, !!m[2])); return; }
     }
     if (/^#\/modes/.test(h)) { show('modes', '四種延伸功能 · 陪伴者角色設定', modesPage()); return; }
     if (/^#\/order/.test(h)) { show('order', '出場優先順序 · 陪伴者角色設定', orderPage(), bindOrder); return; }

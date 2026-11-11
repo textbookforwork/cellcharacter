@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>&#35282;&#33394;&#35373;&#23450;&#36039;&#26009;&#22846;&#65372;&#19977;&#27454;&#38928;&#35261;</title>
+<style>
+html { color-scheme: light; background: #f4f4ef; }
+body { margin: 0; padding: 28px 20px 60px; font-family: "Microsoft JhengHei", sans-serif; color: #252621; }
+.preview-heading { max-width: 880px; margin: 0 auto 28px; }
+.preview-heading h1 { font-size: 26px; margin: 0 0 12px; }
+.preview-heading p { font-size: 15px; line-height: 1.7; margin: 0; color: #68695e; }
+#role-folder-options { color-scheme: light; }
+#role-folder-options .viz-carousel { display: block; max-width: 960px; margin: auto; }
+#role-folder-options [data-variant] { display: block; margin-bottom: 48px; border-bottom: 1px solid #d9d7c6; }
+#role-folder-options [data-variant]:last-child { margin-bottom: 0; border: 0; }
+#role-folder-options .preview-option-name { font-size: 22px; font-weight: 600; max-width: 880px; margin: 0 auto; padding: 16px 18px 0; }
+#role-folder-options .folder-stage { min-height: 0; padding-bottom: 48px; }
+</style>
+</head>
+<body>
+<header class="preview-heading">
+<h1>&#35282;&#33394;&#35373;&#23450;&#36039;&#26009;&#22846; &#183; &#19977;&#27454;&#38928;&#35261;</h1>
+<p>&#19977;&#27454;&#35373;&#35336;&#30001;&#19978;&#24448;&#19979;&#25490;&#21015;&#12290;&#27599;&#27454;&#30340;&#22235;&#20491;&#20998;&#38913;&#37117;&#21487;&#20197;&#40670;&#36984;&#65307;&#30446;&#21069;&#23578;&#26410;&#22871;&#29992;&#21040;&#35282;&#33394;&#38913;&#12290;</p>
+</header>
+<style>
+  #role-folder-options { color-scheme: light dark; font-family: "Noto Sans TC", "Microsoft JhengHei", sans-serif; }
+  #role-folder-options .folder-stage { min-height: 590px; padding: 26px 18px 38px; box-sizing: border-box; }
+  #role-folder-options .folder-demo { --folder-paper: light-dark(#fffefa, #292925); --folder-ink: light-dark(#252621, #f0efe7); --folder-muted: light-dark(#68695e, #babbae); --folder-edge: light-dark(#d9d7c6, #57574a); --folder-cover: light-dark(#f7edc6, #47412b); --folder-tab: light-dark(#eee9d7, #37372f); --folder-accent: light-dark(#f2b31c, #d5a93d); --folder-radius: 16px; color: var(--folder-ink); font-size: 14px; line-height: 1.65; max-width: 880px; margin: 0 auto; }
+  #role-folder-options .folder-demo * { box-sizing: border-box; }
+  #role-folder-options .folder-demo h2, #role-folder-options .folder-demo h3, #role-folder-options .folder-demo p { margin: 0; }
+  #role-folder-options .folder-demo button { font: inherit; cursor: pointer; }
+  #role-folder-options .folder-demo button:focus-visible { outline: 2px solid var(--folder-ink); outline-offset: 4px; z-index: 5; }
+  #role-folder-options .folder-header { display: flex; align-items: center; gap: 18px; padding: 25px 28px; }
+  #role-folder-options .folder-kicker { color: var(--folder-muted); font-size: 11px; letter-spacing: .08em; }
+  #role-folder-options .folder-name { font-size: 30px; font-weight: 600; line-height: 1.25; margin: 5px 0 8px; }
+  #role-folder-options .folder-subtitle { font-size: 13px; }
+  #role-folder-options .folder-mark { width: 60px; height: 38px; background: var(--folder-accent); border-radius: 50% 50% 44% 44%; flex: 0 0 auto; position: relative; }
+  #role-folder-options .folder-mark::before, #role-folder-options .folder-mark::after { content: ""; position: absolute; top: 17px; width: 8px; height: 5px; border-bottom: 2px solid #252621; border-radius: 50%; }
+  #role-folder-options .folder-mark::before { left: 15px; }
+  #role-folder-options .folder-mark::after { right: 15px; }
+  #role-folder-options .folder-tabs { display: flex; gap: 5px; }
+  #role-folder-options .folder-tab { border: 1px solid var(--folder-edge); background: var(--folder-tab); color: var(--folder-muted); padding: 10px 16px; white-space: nowrap; font-size: 12px; }
+  #role-folder-options .folder-tab[aria-selected="true"] { background: var(--folder-paper); color: var(--folder-ink); font-weight: 600; }
+  #role-folder-options .folder-panel { background: var(--folder-paper); min-height: 310px; padding: 30px 32px; }
+  #role-folder-options .folder-panel h3 { font-size: 20px; font-weight: 600; margin-bottom: 12px; line-height: 1.4; }
+  #role-folder-options .folder-panel > p { max-width: 44em; }
+  #role-folder-options .folder-facts { display: grid; grid-template-columns: 105px 1fr; margin: 24px 0 0; gap: 0 20px; }
+  #role-folder-options .folder-facts dt, #role-folder-options .folder-facts dd { padding: 10px 0; border-top: 1px solid var(--folder-edge); margin: 0; }
+  #role-folder-options .folder-facts dt { color: var(--folder-muted); font-size: 12px; }
+  #role-folder-options .folder-facts dd { font-size: 13px; }
+  #role-folder-options .folder-quote { padding: 18px 20px; background: var(--folder-cover); border-radius: 16px 16px 16px 3px; margin: 14px 0 20px; max-width: 34em; }
+  #role-folder-options .folder-caption { color: var(--folder-muted); font-size: 12px; }
+  #role-folder-options .folder-foot { display: flex; justify-content: space-between; border-top: 1px solid var(--folder-edge); padding: 12px 28px; color: var(--folder-muted); font-size: 11px; background: var(--folder-paper); }
+  #role-folder-options .top-folder .folder-header { padding-left: 10px; padding-top: 8px; }
+  #role-folder-options .top-folder .folder-tabs { padding: 0 0 0 18px; position: relative; z-index: 2; }
+  #role-folder-options .top-folder .folder-tab { border-radius: 10px 10px 0 0; transform: translateY(1px); }
+  #role-folder-options .top-folder .folder-tab[aria-selected="true"] { border-bottom-color: var(--folder-paper); padding-top: 13px; margin-top: -3px; }
+  #role-folder-options .top-folder .folder-body { position: relative; border: 1px solid var(--folder-edge); border-radius: 0 var(--folder-radius) var(--folder-radius) var(--folder-radius); background: var(--folder-paper); box-shadow: 5px 6px 0 var(--folder-cover); overflow: hidden; }
+  #role-folder-options .side-folder { padding-right: 90px; position: relative; }
+  #role-folder-options .side-folder .folder-header { background: var(--folder-cover); border-radius: var(--folder-radius) var(--folder-radius) 0 0; border: 1px solid var(--folder-edge); border-bottom: 0; }
+  #role-folder-options .side-folder .folder-tabs { position: absolute; right: 0; top: 142px; width: 91px; flex-direction: column; gap: 7px; }
+  #role-folder-options .side-folder .folder-tab { border-radius: 0 10px 10px 0; padding: 13px 8px; text-align: left; }
+  #role-folder-options .side-folder .folder-tab[aria-selected="true"] { border-left-color: var(--folder-paper); padding-left: 13px; }
+  #role-folder-options .side-folder .folder-body { border: 1px solid var(--folder-edge); border-top: 0; border-radius: 0 0 var(--folder-radius) var(--folder-radius); overflow: hidden; }
+  #role-folder-options .binder-folder { background: var(--folder-cover); border-radius: var(--folder-radius); border: 1px solid var(--folder-edge); padding: 0 18px 18px 46px; position: relative; }
+  #role-folder-options .binder-folder::before { content: ""; position: absolute; left: 21px; top: 32px; bottom: 24px; width: 1px; background: var(--folder-edge); }
+  #role-folder-options .binder-holes { position: absolute; top: 45px; bottom: 42px; left: 14px; display: flex; flex-direction: column; justify-content: space-between; }
+  #role-folder-options .binder-holes i { width: 15px; height: 15px; border-radius: 50%; background: var(--folder-paper); border: 1px solid var(--folder-edge); }
+  #role-folder-options .binder-folder .folder-header { padding-left: 16px; padding-right: 12px; }
+  #role-folder-options .binder-folder .folder-tabs { gap: 0; background: var(--folder-paper); padding: 0 14px; border-bottom: 1px solid var(--folder-edge); }
+  #role-folder-options .binder-folder .folder-tab { flex: 1; border: 0; background: transparent; padding: 13px 8px; position: relative; }
+  #role-folder-options .binder-folder .folder-tab[aria-selected="true"]::after { content: ""; position: absolute; left: 8px; right: 8px; bottom: -1px; height: 5px; background: var(--folder-accent); border-radius: 3px 3px 0 0; }
+  #role-folder-options .binder-folder .folder-body { border-radius: 3px; box-shadow: 3px 4px 0 color-mix(in srgb, var(--folder-edge) 60%, var(--folder-paper)); overflow: hidden; }
+  #role-folder-options .binder-folder .folder-panel { padding-top: 25px; min-height: 285px; }
+  @media (max-width: 520px) {
+    #role-folder-options .folder-stage { padding: 22px 5px 32px; min-height: 690px; }
+    #role-folder-options .folder-header { padding: 20px 15px; gap: 12px; }
+    #role-folder-options .folder-name { font-size: 26px; }
+    #role-folder-options .folder-mark { width: 48px; height: 34px; }
+    #role-folder-options .folder-mark::before { left: 10px; }
+    #role-folder-options .folder-mark::after { right: 10px; }
+    #role-folder-options .folder-tabs { gap: 2px; }
+    #role-folder-options .folder-tab { padding: 11px 7px; font-size: 11px; }
+    #role-folder-options .top-folder .folder-tabs { padding-left: 5px; }
+    #role-folder-options .folder-panel { padding: 23px 17px; min-height: 400px; }
+    #role-folder-options .folder-facts { grid-template-columns: 75px 1fr; gap: 0 10px; }
+    #role-folder-options .folder-foot { padding: 12px 16px; }
+    #role-folder-options .side-folder { padding-right: 60px; }
+    #role-folder-options .side-folder .folder-tabs { width: 61px; top: 153px; }
+    #role-folder-options .side-folder .folder-tab { white-space: normal; padding: 12px 8px; }
+    #role-folder-options .side-folder .folder-header { flex-direction: column; align-items: start; }
+    #role-folder-options .side-folder .folder-facts { grid-template-columns: 1fr; }
+    #role-folder-options .side-folder .folder-facts dd { border-top: 0; padding-top: 0; }
+    #role-folder-options .side-folder .folder-panel { min-height: 390px; }
+    #role-folder-options .binder-folder { padding: 0 9px 12px 29px; }
+    #role-folder-options .binder-folder::before { left: 13px; }
+    #role-folder-options .binder-holes { left: 7px; }
+    #role-folder-options .binder-holes i { width: 13px; height: 13px; }
+    #role-folder-options .binder-folder .folder-tabs { padding: 0 2px; }
+    #role-folder-options .binder-folder .folder-tab { padding: 13px 4px; font-size: 11px; }
+    #role-folder-options .binder-folder .folder-panel { min-height: 380px; }
+  }
+</style>
+<div id="role-folder-options">
+  <div class="viz-carousel viz-dotted-background" aria-label="角色設定資料夾設計" data-previous-label="上一款" data-next-label="下一款">
+    <section data-variant="上緣資料夾" aria-label="上緣資料夾預覽"><h2 class="preview-option-name">上緣資料夾</h2>
+      <div class="folder-stage">
+        <div class="folder-demo top-folder" data-folder="top" aria-label="上緣資料夾">
+          <header class="folder-header"><div class="folder-mark" aria-hidden="true"></div><div><p class="folder-kicker">角色設定 ／ SECURE BASE</p><h2 class="folder-name">安全基地</h2><p class="folder-subtitle">話最少、距離固定、求助才靠近。</p></div></header>
+          <div class="folder-tabs" role="tablist" aria-label="角色設定分頁">
+            <button class="folder-tab" type="button" role="tab" aria-selected="true">角色檔案</button><button class="folder-tab" type="button" role="tab" aria-selected="false">個性外觀</button><button class="folder-tab" type="button" role="tab" aria-selected="false">互動台詞</button><button class="folder-tab" type="button" role="tab" aria-selected="false">界線依據</button>
+          </div>
+          <div class="folder-body"><section class="folder-panel" role="tabpanel"><h3>角色定位</h3><p>溫暖、穩定、少干預。孩子求助時才回應，讓孩子知道失敗了有地方可以回來。</p><dl class="folder-facts"><dt>提供的功能</dt><dd>接住情緒、給勇氣、當探索的起點</dd><dt>滿足的需求</dt><dd>關聯感、安全感</dd><dt>適合情境</dt><dd>考前焦慮、挑戰新任務、剛開始用產品時</dd></dl></section><footer class="folder-foot"><span>安全基地的設定資料夾</span><span data-sheet>01 / 04</span></footer></div>
+        </div>
+      </div>
+    </section>
+    <section data-variant="側邊索引" aria-label="側邊索引預覽"><h2 class="preview-option-name">側邊索引</h2>
+      <div class="folder-stage">
+        <div class="folder-demo side-folder" data-folder="side" aria-label="側邊索引">
+          <header class="folder-header"><div class="folder-mark" aria-hidden="true"></div><div><p class="folder-kicker">角色設定 ／ SECURE BASE</p><h2 class="folder-name">安全基地</h2><p class="folder-subtitle">話最少、距離固定、求助才靠近。</p></div></header>
+          <div class="folder-tabs" role="tablist" aria-label="角色設定分頁" aria-orientation="vertical">
+            <button class="folder-tab" type="button" role="tab" aria-selected="true">角色檔案</button><button class="folder-tab" type="button" role="tab" aria-selected="false">個性外觀</button><button class="folder-tab" type="button" role="tab" aria-selected="false">互動台詞</button><button class="folder-tab" type="button" role="tab" aria-selected="false">界線依據</button>
+          </div>
+          <div class="folder-body"><section class="folder-panel" role="tabpanel"><h3>角色定位</h3><p>溫暖、穩定、少干預。孩子求助時才回應，讓孩子知道失敗了有地方可以回來。</p><dl class="folder-facts"><dt>提供的功能</dt><dd>接住情緒、給勇氣、當探索的起點</dd><dt>滿足的需求</dt><dd>關聯感、安全感</dd><dt>適合情境</dt><dd>考前焦慮、挑戰新任務、剛開始用產品時</dd></dl></section><footer class="folder-foot"><span>安全基地</span><span data-sheet>01 / 04</span></footer></div>
+        </div>
+      </div>
+    </section>
+    <section data-variant="活頁筆記" aria-label="活頁筆記預覽"><h2 class="preview-option-name">活頁筆記</h2>
+      <div class="folder-stage">
+        <div class="folder-demo binder-folder" data-folder="binder" aria-label="活頁筆記">
+          <div class="binder-holes" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+          <header class="folder-header"><div><p class="folder-kicker">角色設定 ／ SECURE BASE</p><h2 class="folder-name">安全基地</h2><p class="folder-subtitle">話最少、距離固定、求助才靠近。</p></div></header>
+          <div class="folder-body">
+            <div class="folder-tabs" role="tablist" aria-label="角色設定分頁">
+              <button class="folder-tab" type="button" role="tab" aria-selected="true">角色檔案</button><button class="folder-tab" type="button" role="tab" aria-selected="false">個性外觀</button><button class="folder-tab" type="button" role="tab" aria-selected="false">互動台詞</button><button class="folder-tab" type="button" role="tab" aria-selected="false">界線依據</button>
+            </div>
+            <section class="folder-panel" role="tabpanel"><h3>角色定位</h3><p>溫暖、穩定、少干預。孩子求助時才回應，讓孩子知道失敗了有地方可以回來。</p><dl class="folder-facts"><dt>提供的功能</dt><dd>接住情緒、給勇氣、當探索的起點</dd><dt>滿足的需求</dt><dd>關聯感、安全感</dd><dt>適合情境</dt><dd>考前焦慮、挑戰新任務、剛開始用產品時</dd></dl></section><footer class="folder-foot"><span>安全基地的設定資料夾</span><span data-sheet>01 / 04</span></footer>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+<script>
+(() => {
+  const root = document.getElementById('role-folder-options');
+  const demos = Array.from(root.querySelectorAll('[data-folder]'));
+  const original = demos[0].querySelector('.folder-panel').innerHTML;
+  const pages = [original,
+    '<h3>個性與外觀</h3><p>話最少、距離固定、求助才靠近。</p><dl class="folder-facts"><dt>溫暖度</dt><dd>5（最高）</dd><dt>介入程度</dt><dd>1–2，求助才靠近</dd><dt>主形狀</dt><dd>圓、矮、寬</dd><dt>必備狀態</dt><dd>靜置、聆聽、安慰、睡著</dd></dl>',
+    '<h3>平台上的台詞</h3><p class="folder-caption">在書櫃挑課本</p><div class="folder-quote">你挑，想換一本也可以。</div><p class="folder-caption">老師加 1 分，孩子看過來時</p><div class="folder-quote">嘿，替你高興。</div>',
+    '<h3>設計界線與依據</h3><dl class="folder-facts"><dt>適用年齡</dt><dd>最適合 6–12 歲</dd><dt>需要留意</dt><dd>過度保護，孩子不敢獨立，焦慮型孩子黏住不放</dd><dt>退場方式</dt><dd>孩子越少求助，角色就逐步縮小、往畫面邊緣退。</dd><dt>理論依據</dt><dd>Bowlby（1969）、Ainsworth 等人（1978）：安全基地與安全港。</dd></dl>'
+  ];
+  const saved = globalThis.openai?.widgetState?.privateContent?.tabs || {};
+  const selections = {};
+  const save = () => {
+    if (globalThis.openai?.setWidgetState) globalThis.openai.setWidgetState({ privateContent: { tabs: selections } }).catch(() => {});
+  };
+  const renderers = {};
+  demos.forEach((demo) => {
+    const key = demo.dataset.folder;
+    const buttons = Array.from(demo.querySelectorAll('.folder-tab'));
+    const panel = demo.querySelector('.folder-panel');
+    panel.id = 'folder-panel-' + key;
+    panel.setAttribute('aria-live', 'polite');
+    buttons.forEach((button, i) => {
+      button.id = 'folder-tab-' + key + '-' + i;
+      button.setAttribute('aria-controls', panel.id);
+    });
+    const select = (index) => {
+      const selected = Number.isInteger(index) && index >= 0 && index < 4 ? index : 0;
+      selections[key] = selected;
+      buttons.forEach((button, i) => button.setAttribute('aria-selected', String(i === selected)));
+      panel.innerHTML = pages[selected];
+      panel.setAttribute('aria-labelledby', buttons[selected].id);
+      demo.querySelector('[data-sheet]').textContent = '0' + (selected + 1) + ' / 04';
+    };
+    renderers[key] = select;
+    buttons.forEach((button, i) => {
+      button.addEventListener('click', () => { select(i); save(); });
+      button.addEventListener('keydown', (event) => {
+        const vertical = key === 'side';
+        const nextKey = vertical ? 'ArrowDown' : 'ArrowRight';
+        const prevKey = vertical ? 'ArrowUp' : 'ArrowLeft';
+        const next = event.key === nextKey ? (i + 1) % 4 : event.key === prevKey ? (i + 3) % 4 : event.key === 'Home' ? 0 : event.key === 'End' ? 3 : null;
+        if (next === null) return;
+        event.preventDefault(); select(next); buttons[next].focus(); save();
+      });
+    });
+    select(saved[key]);
+    if (globalThis.Tweak) {
+      const options = { corners: 16 };
+      const tweak = new Tweak({ container: demo, onChange: () => demo.style.setProperty('--folder-radius', options.corners + 'px') });
+      tweak.addSlider(options, 'corners', { label: '資料夾圓角', min: 0, max: 24, unit: 'px' });
+    }
+  });
+  window.addEventListener('openai:set_globals', (event) => {
+    const tabs = event.detail?.globals?.widgetState?.privateContent?.tabs;
+    if (tabs) Object.keys(renderers).forEach(key => renderers[key](tabs[key]));
+  });
+})();
+</script>
+
+</body>
+</html>

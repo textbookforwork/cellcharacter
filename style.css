@@ -109,6 +109,64 @@ p { text-wrap: pretty; }
 .menu-owner { font-weight: 500; font-size: var(--step-body); }
 .menu-owner { font-weight: 400; color: var(--muted); font-size: var(--step-small); white-space: nowrap; }
 .menu-desc { margin-top: 14px; max-width: 48ch; }
+.role-menu-scroll { overflow-x: auto; padding: 8px 4px 20px; margin-inline: -4px; scrollbar-width: thin; }
+.menu-list.role-menu-list { grid-template-columns: repeat(5, minmax(200px, 1fr)); gap: 16px; }
+.role-menu-list > li { min-width: 0; }
+.role-menu-list .menu-item { padding: 24px 20px; }
+.role-menu-list .menu-name { font-size: 1.25rem; gap: 8px; }
+.role-menu-list .menu-owner { white-space: normal; }
+.role-menu-list .menu-desc { font-size: 1rem; }
+
+/* ---------- 首頁：五個角色的情境對話 ---------- */
+.moments { padding-bottom: var(--section); }
+.moments > h2 { margin-bottom: 36px; }
+.moments-layout { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 28px; align-items: center; }
+.moment-tabs { display: grid; gap: 8px; }
+.moment-tabs button { display: flex; align-items: center; gap: 10px; min-height: 56px; padding: 14px 16px; text-align: left; border-radius: 16px; font-size: var(--step-small); line-height: 1.5; background: var(--surface); transition: background var(--t-hover); }
+.moment-tabs button:hover { background: var(--surface-2); }
+.moment-tabs button[aria-selected="true"] { background: var(--accent); font-weight: 700; }
+.moment-number { color: var(--muted); font-size: 0.75rem; font-variant-numeric: tabular-nums; }
+.moment-scroll { min-width: 0; overflow-x: auto; padding: 8px 4px 20px; scrollbar-width: thin; }
+.moment-lineup { display: grid; grid-template-columns: repeat(5, minmax(150px, 1fr)); gap: 14px; align-items: start; }
+.moment-role { min-width: 0; text-align: center; }
+.moment-figure { height: 132px; display: flex; align-items: end; justify-content: center; }
+.moment-figure .shape { width: 124px; height: 124px; }
+.moment-role h3 { margin: 16px 0 28px; font-size: 1.0625rem; line-height: 1.4; }
+.moment-bubble { position: relative; min-height: 164px; padding: 22px 18px; background: var(--moment-tint); border-radius: 22px; text-align: left; font-size: 1rem; line-height: 1.75; overflow-wrap: anywhere; animation: moment-in 180ms ease-out; }
+.moment-bubble::before { content: ""; position: absolute; top: -10px; left: calc(50% - 10px); border-left: 10px solid transparent; border-right: 10px solid transparent; border-bottom: 11px solid var(--moment-tint); }
+.moment-bubble.is-quiet { display: flex; justify-content: center; align-items: center; color: var(--muted); }
+@keyframes moment-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 760px) {
+  .moments > h2 { margin-bottom: 24px; }
+  .moments-layout { grid-template-columns: 1fr; gap: 16px; }
+  .moment-tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); padding-top: 0; }
+  .moment-tabs button { padding: 12px; }
+  .moment-lineup { grid-template-columns: repeat(5, 168px); }
+  .moment-scroll { padding-bottom: 20px; }
+}
+@media (prefers-reduced-motion: reduce) { .moment-bubble { animation: none; } }
+
+/* ---------- 首頁：五顆並排比較表 ---------- */
+.ohero .btn { margin-top: 28px; }
+.cmp { padding-bottom: var(--section); }
+.cmp-head { display: grid; grid-template-columns: minmax(180px, 240px) minmax(0, 880px); justify-content: space-between; gap: 16px clamp(2rem, 5vw, 5rem); align-items: start; margin-bottom: 40px; }
+.cmp-head h2 { font-size: var(--step-head); }
+.cmp-head p { max-width: 52ch; font-size: var(--step-lead); line-height: 1.45; }
+.cmp-scroll { overflow-x: auto; border-radius: var(--radius); background: var(--bg); border: 1px solid var(--surface-2); -webkit-overflow-scrolling: touch; }
+.cmp-scroll:focus-visible { outline-offset: 0; }
+.cmp-table { width: 100%; min-width: 880px; border-collapse: separate; border-spacing: 0; table-layout: fixed; font-size: var(--step-small); line-height: 1.5; }
+.cmp-table th, .cmp-table td { padding: 16px 18px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--surface-2); }
+.cmp-table thead th { position: sticky; top: 64px; z-index: 2; padding: 20px 18px 18px; border-bottom: 0; }
+.cmp-table thead th:first-child, .cmp-table tbody th { position: sticky; left: 0; z-index: 3; width: 8.5em; background: var(--bg); font-weight: 700; }
+.cmp-table thead th:first-child { z-index: 4; }
+.cmp-table thead a { display: grid; gap: 2px; transition: opacity var(--t-hover); }
+.cmp-table thead a:hover { opacity: 0.6; }
+.cmp-name { font-size: var(--step-body); font-weight: 700; }
+.cmp-en { color: var(--muted); font-weight: 400; }
+.cmp-table td { background: var(--bg); }
+.cmp-table tbody tr:last-child th, .cmp-table tbody tr:last-child td { border-bottom: 0; }
+.cmp-table td .dots { display: flex; margin-bottom: 8px; }
+.cmp-table td .dots i { width: 10px; height: 10px; }
 
 /* ---------- 出場順序頁：深到淺的手風琴 ---------- */
 .ohero { width: 100%; max-width: 1440px; margin-inline: auto; padding: clamp(2rem, 5vw, 4.5rem) var(--margin) 0; }
@@ -153,6 +211,12 @@ p { text-wrap: pretty; }
 .answer p + p { margin-top: 14px; }
 .answer-in { transition: opacity 300ms var(--ease-out), transform 300ms var(--ease-out); }
 .answer-in.hidden { opacity: 0; transform: translateY(10px); }
+.rule-sources { margin-top: 36px; padding-top: 28px; border-top: 1px solid var(--surface-2); }
+.rule-sources h4 { margin-bottom: 20px; font-size: 1rem; }
+.rule-sources .refs { gap: 20px; }
+.rule-sources .refs li { grid-template-columns: 10em 1fr; }
+.rule-sources .refs p { max-width: none; }
+.rule-sources .refs p + p { margin-top: 0; }
 
 /* ---------- 五條原則 ---------- */
 .principles { margin-top: var(--section); background: var(--ink); color: #fff; padding-block: 96px; }
@@ -213,6 +277,18 @@ p { text-wrap: pretty; }
 .ref-what { grid-column: 2; }
 .risk .ref-theory { color: var(--muted); }
 
+/* 平台上的五個時刻 */
+.plat .dsec-grid { border-bottom: 0; }
+.plat-list { display: grid; gap: 12px; counter-reset: plat; }
+.plat-list li { display: grid; grid-template-columns: 11em minmax(0, 1fr); gap: 12px 24px; padding: 24px 28px; background: var(--surface); border-radius: var(--radius); }
+.plat-when { font-weight: 700; display: flex; gap: 12px; align-items: baseline; }
+.plat-when::before { counter-increment: plat; content: counter(plat); flex: 0 0 28px; width: 28px; height: 28px; border-radius: 50%; background: var(--ink); color: #fff; display: inline-flex; align-items: center; justify-content: center; font-size: var(--step-small); }
+.plat-body { display: grid; gap: 12px; justify-items: start; }
+.plat-does { color: var(--muted); font-size: var(--step-small); }
+.plat-body .bubble { max-width: 40ch; }
+.plat-wrong { color: var(--muted); font-size: var(--step-small); text-decoration: line-through; margin-top: 4px; }
+.plat-wrong span { text-decoration: none; font-weight: 700; margin-right: 10px; }
+
 /* 對話區 */
 .talk { margin-top: 0; background: var(--tint); padding-block: clamp(3.5rem, 5vw, 5rem); }
 .talk-grid { display: grid; grid-template-columns: minmax(180px, 240px) minmax(0, 880px); justify-content: space-between; gap: 24px clamp(2rem, 5vw, 5rem); align-items: start; }
@@ -247,6 +323,55 @@ p { text-wrap: pretty; }
 .pager-n { font-size: var(--step-head); font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; }
 .pager + .foot { margin-top: 0; }
 
+/* 角色設定資料夾：上緣四個分頁 */
+.dhero.dossier-hero { grid-template-columns: 96px minmax(0, 1fr); gap: 24px; align-items: center; padding: 36px 8px 40px; border-radius: 0; overflow: visible; }
+.dossier-avatar .shape { width: 96px; height: 96px; }
+.dossier-hero .dhero-text { padding: 0; max-width: 880px; }
+.dossier-hero .dhero-kicker { margin-bottom: 10px; }
+.dossier-hero .dhero-h { font-size: clamp(2rem, 2.4vw + 1rem, 3.25rem); }
+.dossier-hero .dhero-tag { margin-top: 12px; font-size: var(--step-body); max-width: none; }
+.role-folder { padding-bottom: 10px; }
+.folder-tabs { position: sticky; top: 64px; z-index: 5; display: flex; align-items: end; gap: 6px; padding: 8px 18px 0; background: var(--bg); }
+.folder-tabs button { position: relative; bottom: -1px; padding: 11px 22px; border: 1px solid var(--surface-2); border-radius: 10px 10px 0 0; background: var(--folder-tint); color: var(--muted); font-size: 0.9375rem; line-height: 1.5; white-space: nowrap; transition: background var(--t-hover), color var(--t-hover); }
+.folder-tabs button:hover { color: var(--ink); }
+.folder-tabs button[aria-selected="true"] { background: var(--paper); color: var(--ink); border-bottom-color: var(--paper); font-weight: 700; padding-top: 14px; }
+.folder-tabs button:focus-visible { z-index: 1; }
+.folder-sheets { border: 1px solid var(--surface-2); border-radius: 16px; background: var(--paper); box-shadow: 5px 6px 0 var(--folder-tint); }
+.folder-panel { padding: 8px clamp(20px, 3vw, 44px) 12px; min-height: 400px; }
+.folder-panel[hidden] { display: none; }
+.folder-panel .dsec { padding-top: 32px; }
+.folder-panel .dsec-grid, .folder-panel .talk-grid { grid-template-columns: minmax(160px, 210px) minmax(0, 1fr); gap: 24px 40px; }
+.folder-panel .dsec-grid { padding-bottom: 32px; }
+.folder-panel > .dsec:last-child > .dsec-grid { border-bottom: 0; }
+.folder-panel h2 { font-size: clamp(1.35rem, 1rem + 1vw, 1.75rem); line-height: 1.35; }
+.folder-panel .dsec-note { font-size: var(--step-small); }
+.folder-profile > p + p { margin-top: 12px; }
+.folder-profile > .dl { margin-top: 24px; }
+.folder-panel .talk { padding: 28px; margin-bottom: 20px; border-radius: 16px; }
+.folder-panel .talk-grid { grid-template-columns: minmax(180px, 240px) minmax(0, 1fr); gap: 28px; }
+.folder-panel .scenes { margin-top: 20px; }
+.folder-panel .scenes button { white-space: normal; padding: 12px 16px; font-size: var(--step-small); }
+.folder-panel .plat-list li { grid-template-columns: minmax(130px, 180px) minmax(0, 1fr); padding: 22px; gap: 20px; }
+.folder-page-mark { display: flex; justify-content: space-between; gap: 16px; border-top: 1px solid var(--surface-2); padding: 14px clamp(20px, 3vw, 44px); font-size: var(--step-small); color: var(--muted); }
+#folder-page-number { font-variant-numeric: tabular-nums; white-space: nowrap; }
+@media (max-width: 980px) {
+  .folder-panel .dsec-grid, .folder-panel .talk-grid { grid-template-columns: 1fr; gap: 20px; }
+  .folder-panel .dsec-grid > :last-child, .folder-panel .talk-grid > :last-child { max-width: none; }
+}
+@media (max-width: 760px) {
+  .dhero.dossier-hero { grid-template-columns: 64px minmax(0, 1fr); gap: 14px; padding: 24px 0 28px; }
+  .dossier-avatar .shape { width: 64px; height: 64px; }
+  .dossier-hero .dhero-text { padding: 0; }
+  .dossier-hero .dhero-kicker { font-size: 0.75rem; gap: 6px; flex-wrap: wrap; }
+  .dossier-hero .dhero-h { font-size: 2rem; }
+  .folder-tabs { padding-inline: 5px; gap: 3px; }
+  .folder-tabs button { flex: 1; padding: 11px 5px; font-size: 0.8125rem; }
+  .folder-panel { padding-inline: 18px; min-height: 340px; }
+  .folder-panel .talk { padding: 20px 14px; }
+  .folder-panel .plat-list li { grid-template-columns: 1fr; padding: 18px; }
+  .folder-page-mark { padding-inline: 18px; font-size: 0.8125rem; }
+}
+
 /* ---------- 手機 ---------- */
 @media (max-width: 760px) {
   .bar { gap: 14px; }
@@ -264,6 +389,13 @@ p { text-wrap: pretty; }
   .menu-list { grid-template-columns: 1fr; gap: 16px; }
   .menu-item { padding: 20px; }
   .menu-owner { white-space: normal; }
+  .cmp-head { grid-template-columns: 1fr; gap: 12px; margin-bottom: 24px; }
+  .cmp-head p { font-size: var(--step-body); }
+  .cmp-scroll { margin-inline: calc(-1 * var(--margin)); border-radius: 0; }
+  .cmp-table { min-width: 760px; }
+  .cmp-table th, .cmp-table td { padding: 12px 14px; }
+  .cmp-table thead th { position: static; }
+  .cmp-table thead th:first-child, .cmp-table tbody th { width: 6.5em; position: sticky; }
   .hand li { grid-template-columns: 1fr; gap: 4px; }
   .acc { flex-direction: column; height: auto; }
   .acc-panel { flex: 0 0 64px; min-height: 64px; }
@@ -274,6 +406,9 @@ p { text-wrap: pretty; }
   .acc-panel.is-open .acc-body { display: block; }
   .faq-grid { grid-template-columns: 1fr; }
   .answer { padding: 24px; min-height: 0; }
+  .rule-sources .refs li { grid-template-columns: 1fr; gap: 4px; }
+  .rule-sources .ref-who { grid-row: auto; }
+  .rule-sources .ref-what { grid-column: 1; }
   .pr-grid { grid-template-columns: 1fr; gap: 32px; }
     .foot-grid { grid-template-columns: 1fr 1fr; }
   .foot-src { grid-column: 1 / -1; }
@@ -288,6 +423,8 @@ p { text-wrap: pretty; }
   .knobs li { grid-template-columns: auto 1fr; }
   .knob-n { grid-column: 1 / -1; }
   .state-fig { width: 80px; height: 80px; }
+  .plat-list li { grid-template-columns: 1fr; padding: 20px; }
+  .plat-body .bubble { max-width: none; }
   .talk { padding-block: 56px; }
   .scenes { grid-template-columns: 1fr; }
   .chat { min-height: 0; }
